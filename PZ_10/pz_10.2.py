@@ -1,22 +1,37 @@
-#Вывести файл, посчитать заглавные буквы, создать новый файл с автором и названием
+# Из предложенного текстового файла (text18-10.txt) вывести на экран его содержимое, количество букв в верхнем регистре. Сформировать новый файл, в который поместить текст в стихотворной форме предварительно поставив после последней строки автора и название произведения.
 
-f = open("text18-10.txt", "r", encoding="utf-8")
+with open("text18-10.txt", "r", encoding="utf-8") as file:
+    text = file.read()
 
-text = f.read()
+print("Содержимое файла:\n")
 print(text)
 
-k = 0
-for i in text:
-    if i.isupper():
-        k += 1
+upper_count = 0
 
-print("Количество больших букв:", k)
+for ch in text:
+    if ch.isupper():
+        upper_count += 1
 
-new = open("new_text.txt", "w", encoding="utf-8")
+print("\nКоличество букв в верхнем регистре:", upper_count)
 
-new.write(text)
-new.write("\n\nАвтор: М. Ю. Лермонтов")
-new.write("\nНазвание: Бородино")
+poem = [
+    "Ну ж был денёк! Сквозь дым летучий,",
+    "Французы двинулись, как тучи,",
+    "И всё на наш редут.",
+    "Уланы с пёстрыми значками,",
+    "Драгуны с конскими хвостами,",
+    "Все промелькнули перед нами,",
+    "Все побывали тут."
+]
 
-f.close()
-new.close()
+author = "М. Ю. Лермонтов"
+title = "Бородино"
+
+with open("result.txt", "w", encoding="utf-8") as file:
+    file.write("Стихотворение:\n\n")
+
+    for line in poem:
+        file.write(line + "\n")
+
+    file.write("\n")
+    file.write(f"{author} — «{title}»\n")
