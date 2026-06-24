@@ -1,6 +1,5 @@
-#https://professorweb.ru/my/html/html5/level2/files/img46023.jpg
+#https://professorweb.ru/my/html/html5/level2/files/img46023.jpgfrom tkinter import *
 
-from tkinter import *
 from tkinter import ttk
 from tkinter import messagebox
 
@@ -50,19 +49,24 @@ text_qualities.grid(row=2, column=1, pady=5, padx=(10, 0))
 frame_animals = LabelFrame(root, text="Выберите ваших любимых животных", font=("Arial", 10, "bold"))
 frame_animals.grid(row=4, column=0, columnspan=2, sticky="ew", padx=20, pady=5)
 
-animals = ["Зебра", "Кошак", "Анаконда", "Человек", "Слон", "Антилопа", "Голубь", "Краб"]
+animals = ["Зебра", "Кот", "Анаконда", "Питон", "Слон", "Антилопа", "Орёл", "Краб"]
 animal_vars = {}
 
 for i, animal in enumerate(animals):
-animal_vars[animal] = BooleanVar()
-row = 0 if i < 4 else 1
-col = i % 4
-Checkbutton(frame_animals, text=animal, variable=animal_vars[animal]).grid(row=row, column=col, sticky="w", pady=5, padx=15)
+    animal_vars[animal] = BooleanVar()
+    row = 0 if i < 4 else 1
+    col = i % 4
+    Checkbutton(
+        frame_animals,
+        text=animal,
+        variable=animal_vars[animal]
+    ).grid(row=row, column=col, sticky="w", pady=5, padx=15)
 
 Button(root, text="Отправить информацию", bg="#4CAF50", fg="white",
 font=("Arial", 11, "bold")).grid(row=5, column=0, columnspan=2, pady=20)
 
 root.columnconfigure(0, weight=1)
+
 root.columnconfigure(1, weight=1)
 
 root.mainloop()
