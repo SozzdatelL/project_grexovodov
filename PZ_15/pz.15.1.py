@@ -2,77 +2,63 @@
 
 import sqlite3
 
-conn = sqlite3.connect('industry.db')
-c = conn.cursor()
+conn = sqlite3.connect("industry.db")
+cursor = conn.cursor()
 
-c.execute('''CREATE TABLE IF NOT EXISTS Predpriyatiya (
-    kod INTEGER PRIMARY KEY,
+cursor.execute("""
+CREATE TABLE IF NOT EXISTS enterprises (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     name TEXT,
     address TEXT,
-    filials INTEGER,
-    personnel INTEGER,
-    equipment REAL,
-    volume REAL,
-    reg_date TEXT
-)''')
-
-for _ in range(10):
-    data = (
-        int(input("Код: ")),
-        input("Наименование: "),
-        input("Адрес: "),
-        int(input("Филиалы: ")),
-        int(input("Персонал: ")),
-        float(input("Стоим. оборудования: ")),
-        float(input("Объем продукции: ")),
-        input("Дата регистрации: ")
-    )
-    c.execute("INSERT INTO Predpriyatiya VALUES (?,?,?,?,?,?,?,?)", data)
+    branches INTEGER,
+    staff INTEGER,
+    equipment_cost REAL,
+    production_volume REAL,
+    registration_date TEXT
+)
+""")
 
 conn.commit()
 
-def menu():
-    print("1. Поиск 2. Удаление 3. Редактирование 4. Выход")
-    return input("Выбор: ")
+def add_enterprise(name, address, branches, staff, equipment_cost, production_volume, registration_date):
+    cursor.execute("""
+    INSERT INTO enterprises (
+        name, address, branches, staff,
+        equipment_cost, production_volume, registration_date
+    ) VALUES (?, ?, ?, ?, ?, ?, ?)
+    """, (name, address, branches, staff, equipment_cost, production_volume, registration_date))
 
-def search():
-    print("1. По коду 2. По названию 3. По адресу")
-    ch = input()
-    if ch == '1': q = "SELECT * FROM Predpriyatiya WHERE kod=?"
-    elif ch == '2': q = "SELECT * FROM Predpriyatiya WHERE name LIKE ?"
-    else: q = "SELECT * FROM Predpriyatiya WHERE address LIKE ?"
-    val = input("Значение: ")
-    for row in c.execute(q, (val if ch=='1' else f"%{val}%",)): print(row)
-
-
-def delete():
-    print("1. По коду 2. По названию 3. По адресу")
-    ch = input()
-    if ch == '1': q = "DELETE FROM Predpriyatiya WHERE kod=?"
-    elif ch == '2': q = "DELETE FROM Predpriyatiya WHERE name LIKE ?"
-    else: q = "DELETE FROM Predpriyatiya WHERE address LIKE ?"
-    val = input("Значение: ")
-    c.execute(q, (val if ch=='1' else f"%{val}%",))
     conn.commit()
 
 
-def edit():
-    print("1. По коду 2. По названию 3. По адресу")
-    ch = input()
-    if ch == '1': cond = "kod=?"
-    elif ch == '2': cond = "name LIKE ?"
-    else: cond = "address LIKE ?"
-    val = input("Условие: ")
-    field = input("Поле (name/address/filials/personnel/equipment/volume/reg_date): ")
-    newval = input("Новое значение: ")
-    c.execute(f"UPDATE Predpriyatiya SET {field}=? WHERE {cond}", (newval, val if ch=='1' else f"%{val}%"))
-    conn.commit()
+def show_enterprises():
+    cursor.execute("SELECT * FROM enterprises")
+    rows = cursor.fetchall()
 
-while True:
-    choice = menu()
-    if choice == '1': search()
-    elif choice == '2': delete()
-    elif choice == '3': edit()
-    elif choice == '4': break
+    print("\nСписок предприятий:")
+    for row in rows:
+        print(row)
+
+add_enterprise(
+    "Завод Прогресс",
+    "г. Минск, ул. Ленина 10",
+    3,
+    1200,
+    5000000,
+    250000,
+    "2010-05-12"
+)
+
+add_enterprise(
+    "МеталлПром",
+    "г. Гомель, ул. Заводская 5",
+    2,
+    800,
+    3200000,
+    180000,
+    "2015-09-20"
+)
+
+show_enterprises()
 
 conn.close()
