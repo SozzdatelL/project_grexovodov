@@ -1,21 +1,24 @@
-#Создать txt → записать количество, элементы в обратном порядке и сумму второй половины
+#Средствами языка Python сформировать текстовый файл (.txt), содержащий последовательность из целых положительных и отрицательных чисел. Сформировать новый текстовый файл (.txt) следующего вида, предварительно выполнив требуемую обработку элементов: 
+#Исходные данные:
+#Количество элементов:
+#Элементы в обратном порядке:
+#Сумма элементов последней половины:
 
 
-f = open("numbers.txt", "w")
+numbers = [12, -3, 7, -8, 5, 10, -2, 4]
 
-a = list(map(int, input("Введите числа: ").split()))
+with open("input.txt", "w", encoding="utf-8") as file:
+    file.write(" ".join(map(str, numbers)))
 
-f.write("Исходные данные:\n")
-f.write(" ".join(map(str, a)) + "\n")
+with open("input.txt", "r", encoding="utf-8") as file:
+    data = list(map(int, file.read().split()))
 
-f.write("Количество элементов:\n")
-f.write(str(len(a)) + "\n")
+count = len(data)
+reversed_data = data[::-1]
+second_half_sum = sum(data[len(data)//2:])
 
-f.write("Элементы в обратном порядке:\n")
-f.write(" ".join(map(str, a[::-1])) + "\n")
-
-f.write("Сумма элементов последней половины:\n")
-f.write(str(sum(a[len(a)//2:])))
-
-f.close()
-
+with open("output.txt", "w", encoding="utf-8") as file:
+    file.write("Исходные данные: " + " ".join(map(str, data)) + "\n")
+    file.write("Количество элементов: " + str(count) + "\n")
+    file.write("Элементы в обратном порядке: " + " ".join(map(str, reversed_data)) + "\n")
+    file.write("Сумма элементов последней половины: " + str(second_half_sum) + "\n")
