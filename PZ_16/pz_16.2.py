@@ -1,17 +1,28 @@
-#написать код что бы в выводе была кличка собаки, порода, окрас.
-class Zhivotnoe:
-    def __init__(self, vid, kolichestvo_lap, tsvet_shersti):
-        self.vid = vid
-        self.kolichestvo_lap = kolichestvo_lap
-        self.tsvet_shersti = tsvet_shersti
+# Создайте базовый класс "Животное" со свойствами "вид", "количество лап", "цвет шерсти". От этого класса унаследуйте класс "Собака" и добавьте в него свойства "кличка" и "порода".
+
+class Animal:
+    def __init__(self, species, legs_count, fur_color):
+        self.species = species
+        self.legs_count = legs_count
+        self.fur_color = fur_color
 
 
-class Sobaka(Zhivotnoe):
-    def __init__(self, vid, kolichestvo_lap, tsvet_shersti, klichka, poroda):
-        super().__init__(vid, kolichestvo_lap, tsvet_shersti)
-        self.klichka = klichka
-        self.poroda = poroda
+class Dog(Animal):
+    def __init__(self, species, legs_count, fur_color, nickname, breed):
+        super().__init__(species, legs_count, fur_color)
+        self.nickname = nickname
+        self.breed = breed
+
+    def show_info(self):
+        print(
+            f"Вид: {self.species}\n"
+            f"Количество лап: {self.legs_count}\n"
+            f"Цвет шерсти: {self.fur_color}\n"
+            f"Кличка: {self.nickname}\n"
+            f"Порода: {self.breed}"
+        )
 
 
-dog = Sobaka("sobaka", 4, "ryzhiy", "Sharik", "Dvornaga")
-print(dog.klichka, dog.poroda, dog.vid)
+dog1 = Dog("Собака", 4, "рыжий", "Рекс", "Лабрадор")
+
+dog1.show_info()
