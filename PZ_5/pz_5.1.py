@@ -12,6 +12,5 @@ def steps_to_zero(n):
     
     return steps
 
-# пример использования
 n = int(input())
 print(steps_to_zero(n))
