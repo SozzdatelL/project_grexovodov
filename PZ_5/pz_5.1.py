@@ -1,17 +1,17 @@
 #Составить функцию решения задачи: из заданного числа вычли сумму его цифр. Из результата вновь вычли сумму его цифр и т. д. Через сколько таких действий получится нуль?
 
-def sum_digits(n):
-    s = 0
+def digit_sum(n):
+    return sum(int(d) for d in str(n))
+
+def steps_to_zero(n):
+    steps = 0
+    
     while n > 0:
-        s += n % 10
-        n //= 10
-    return s
+        n -= digit_sum(n)
+        steps += 1
+    
+    return steps
 
-N = int(input())
-
-count = 0
-while N > 0:
-    N -= sum_digits(N)
-    count += 1
-
-print(count)
+# пример использования
+n = int(input())
+print(steps_to_zero(n))
