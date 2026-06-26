@@ -1,8 +1,12 @@
 #Дана строка, содержащая полное имя файла. Выделить из этой строки название последнего каталога (без символов «\»). Если файл содержится в корневом каталоге,то вывести символ «\ ».
-path = input()
-parts = path.split("\\")
 
-if len(parts) <= 2:
-    print("\\")
+path = input()
+
+if '\\' not in path:
+    print('\\')
 else:
+    path = path.rstrip('\\')
+    
+    parts = path.split('\\')
+    
     print(parts[-2])
